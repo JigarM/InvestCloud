@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+             xmlns:fontHelpers="clr-namespace:InvestCloud.Utils.FontHelpers"
+             xmlns:res="clr-namespace:InvestCloud.Resources.Strings"
+             Shell.NavBarIsVisible="False"
+             NavigationPage.HasNavigationBar="False"
+             HideSoftInputOnTapped="True"
+             BackgroundColor="{x:StaticResource Secondary}"
+             x:Class="InvestCloud.Pages.SignupSuccessPage">
+    
+    <!-- Content -->
+    <ContentPage.Content>
+        <Grid RowDefinitions="*, 40, *">
+            
+            <Image Grid.Row="0" Source="applogo" HeightRequest="200" WidthRequest="200" VerticalOptions="End" Margin="0, 0, 0, 40"/>
+            
+            <HorizontalStackLayout Grid.Row="1" Margin="20, 0" Spacing="5" HorizontalOptions="Center" VerticalOptions="Center">
+                <Image HeightRequest="35" VerticalOptions="Start">
+                    <Image.Source>
+                        <fontHelpers:FontAwesomeSolidIconSource Glyph="{x:Static fontHelpers:FontAwesomeIcons.CircleCheck}" Color="{x:StaticResource Primary}" />
+                    </Image.Source>
+                </Image>
+                <Label FontSize="15" FontFamily="NunitoBold" TextColor="{x:StaticResource Primary}"
+                       Text="{x:Static res:AppResources.AccountCreatedSuccessfully}" VerticalOptions="Center" HorizontalOptions="Start"/>
+            </HorizontalStackLayout>
+            
+            <!-- Sign In Now button -->
+            <buttons:SfButton x:Name="SignInNowButton"
+                              Grid.Row="2"
+                              VerticalOptions="Start"
+                              Margin="35, 20"
+                              FontSize="18" FontFamily="NunitoBold"
+                              Background="{x:StaticResource Primary}"
+                              Text="{x:Static res:AppResources.SignInNow}"
+                              Clicked="OnClickedSignInNow"
+                              HeightRequest="55"/>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

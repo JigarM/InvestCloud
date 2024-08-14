@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+             xmlns:fontHelpers="clr-namespace:InvestCloud.Utils.FontHelpers"
+             xmlns:res="clr-namespace:InvestCloud.Resources.Strings"
+             xmlns:viewModel="clr-namespace:InvestCloud.ViewModels"
+             x:DataType="viewModel:GetStartedViewModel"
+             Shell.NavBarIsVisible="False"
+             NavigationPage.HasNavigationBar="False"
+             x:Class="InvestCloud.Pages.GetStartedPage"
+             BackgroundColor="{x:StaticResource Secondary}">
+    
+    <ContentPage.Resources>
+        <DataTemplate x:Key="SignInTemplate">
+            <Label x:Name="label" Text="{x:Static res:AppResources.SignIn}" FontSize="21" TextColor="White"
+                   FontFamily="NunitoBold" HorizontalOptions="Center" VerticalOptions="Center"/>
+        </DataTemplate>
+        <DataTemplate x:Key="SignUpTemplate">
+            <Label x:Name="label" Text="{x:Static res:AppResources.SignUp}" FontSize="21" TextColor="{x:StaticResource Primary}"
+                   FontFamily="NunitoBold" HorizontalOptions="Center" VerticalOptions="Center"/>
+        </DataTemplate>
+    </ContentPage.Resources>
+    
+    <ContentPage.Content>
+        <ScrollView>
+            <Grid RowDefinitions="*, *" Margin="10,0">
+                
+                <!-- Logo -->
+                <Image Grid.Row="0" Source="applogo"/>
+                
+                <!-- Get Started Content -->
+                <VerticalStackLayout Grid.Row="1" Spacing="0" Margin="10, 10">
+                    
+                    <HorizontalStackLayout Spacing="9">
+                        <Image HeightRequest="30" VerticalOptions="Center">
+                            <Image.Source>
+                                <fontHelpers:FontAwesomeSolidIconSource Glyph="{x:Static fontHelpers:FontAwesomeIcons.TreeCity}" Color="{x:StaticResource Primary}" />
+                            </Image.Source>
+                        </Image>
+                        <Label FontSize="23" FontFamily="NunitoBold" 
+                               Text="{x:Static res:AppResources.GreenField}" TextColor="{x:StaticResource Primary}"/>
+                    </HorizontalStackLayout>
+                    
+                    <Label FontSize="25" FontFamily="NunitoBold" Margin="0, 15, 0, 0"
+                           Text="{x:Static res:AppResources.GetStartedTitle}" TextColor="{x:StaticResource Primary}"/>
+                    
+                    <Label FontSize="12" FontFamily="NunitoRegular" Margin="0, 5, 0, 0"
+                           Text="{x:Static res:AppResources.GetStartedDescription}" TextColor="{x:StaticResource Primary}"/>
+                    
+                    <!-- Sign In button -->
+                    <buttons:SfButton x:Name="SignInButton"
+                                      Margin="0, 20, 0, 0"
+                                      Background="{x:StaticResource Primary}"
+                                      Content="{StaticResource SignInTemplate}"
+                                      HeightRequest="55"
+                                      Clicked="OnSignInClicked"/>
+                    
+                    <!-- Sign Up button -->
+                    <buttons:SfButton x:Name="SignUpButton"
+                                      Margin="0, 20, 0, 0"
+                                      Background="Transparent"
+                                      Stroke="{x:StaticResource Primary}"
+                                      StrokeThickness="2"
+                                      Content="{StaticResource SignUpTemplate}"
+                                      HeightRequest="55"
+                                      Clicked="OnSignUpClicked"/>
+                </VerticalStackLayout>
+            </Grid>        
+        </ScrollView>
+        
+    </ContentPage.Content>
+</ContentPage>

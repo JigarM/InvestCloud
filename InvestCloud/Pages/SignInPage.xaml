@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:coreLayout="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+             xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+             xmlns:fontHelpers="clr-namespace:InvestCloud.Utils.FontHelpers"
+             xmlns:viewModel="clr-namespace:InvestCloud.ViewModels"
+             xmlns:res="clr-namespace:InvestCloud.Resources.Strings"
+             x:DataType="viewModel:SignInViewModel"
+             Shell.NavBarIsVisible="False"
+             NavigationPage.HasNavigationBar="False"
+             HideSoftInputOnTapped="True"
+             x:Class="InvestCloud.Pages.SignInPage">
+    
+    <!-- Resources -->
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Image" x:Key="IconImageStyle">
+                <Setter Property="HeightRequest" Value="18"/>
+                <Setter Property="Aspect" Value="AspectFit"/>
+                <Setter Property="VerticalOptions" Value="Center"/>
+                <Setter Property="HorizontalOptions" Value="Center"/>
+            </Style>
+            <Style TargetType="Image" x:Key="BackButtonStyle">
+                <Setter Property="HeightRequest" Value="35"/>
+                <Setter Property="Aspect" Value="AspectFit"/>
+                <Setter Property="VerticalOptions" Value="Center"/>
+                <Setter Property="HorizontalOptions" Value="Start"/>  
+            </Style>
+            <DataTemplate x:Key="LoadingTemplate">
+                <Grid VerticalOptions="Fill" HorizontalOptions="Fill">
+                    <coreLayout:SfBusyIndicator x:Name="busy" AnimationType="CircularMaterial" IsRunning="True" 
+                        WidthRequest="45" HeightRequest="45" IndicatorColor="White" 
+                        VerticalOptions="Center" HorizontalOptions="Center"/>
+                </Grid>
+            </DataTemplate>
+            <DataTemplate x:Key="InitialTemplate">
+                <Label x:Name="label" Text="{x:Static res:AppResources.SignIn}" FontSize="21" TextColor="White"
+                       FontFamily="NunitoBold" HorizontalOptions="Center" VerticalOptions="Center"/>
+            </DataTemplate>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
+    <!-- Content -->
+    <ContentPage.Content>
+        <ScrollView>
+            <Grid RowDefinitions="64, 150, *" Margin="10,0">
+                <Image Margin="15, 0 ,0,0" 
+                    Style="{StaticResource BackButtonStyle}">
+                    <Image.Source>
+                        <fontHelpers:FontAwesomeSolidIconSource Glyph="{x:Static fontHelpers:FontAwesomeIcons.ArrowLeft}"
+                                                                Color="{x:StaticResource Primary}" />
+                    </Image.Source>
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnBackButtonTapped"></TapGestureRecognizer>
+                    </Image.GestureRecognizers>
+                </Image>
+                
+                <!-- Logo -->
+                <Image Grid.Row="1" HeightRequest="150" WidthRequest="150" Source="applogo"/>
+                
+                <!-- Login Content -->
+                <StackLayout Grid.Row="2" Spacing="0" Margin="10, 10">
+                    
+                    <!-- Welcome Back -->
+                    <Label FontSize="32" FontFamily="NunitoBold" Text="{x:Static res:AppResources.WelcomeBack}"/>
+                    <Label Text="{x:Static res:AppResources.LoginBackToYourAccount}" FontSize="12" FontFamily="NunitoRegular"/>
+                    
+                    <!-- Username -->
+                    <Label FontSize="15" Margin="0, 40, 0, 0" FontFamily="NunitoRegular" Text="{x:Static res:AppResources.EnterYourUsername}"/>
+                    <coreLayout:SfTextInputLayout Hint="{x:Static res:AppResources.Username}" HeightRequest="75" Margin="0, 5,0,0" 
+                                                  LeadingViewPosition="Inside"
+                                                  ContainerBackground="{x:StaticResource ContainerBackgroundColor}">
+                        <Entry x:Name="UsernameEntry" Text="{Binding Username, Mode=TwoWay}"
+                               TextChanged="UpdateSignInLayout"/>
+                        <coreLayout:SfTextInputLayout.HintLabelStyle>
+                            <coreLayout:LabelStyle FontSize="16" FontFamily="NunitoRegular"/>
+                        </coreLayout:SfTextInputLayout.HintLabelStyle>
+                        <coreLayout:SfTextInputLayout.LeadingView>
+                            <Image Style="{StaticResource IconImageStyle}">
+                                <Image.Source>
+                                    <fontHelpers:FontAwesomeSolidIconSource Glyph="{x:Static fontHelpers:FontAwesomeIcons.User}"
+                                                                            Color="{x:StaticResource Primary}" />
+                                </Image.Source>
+                            </Image>
+                        </coreLayout:SfTextInputLayout.LeadingView>
+                    </coreLayout:SfTextInputLayout>
+                    
+                    <!-- Password -->
+                    <Label Text="{x:Static res:AppResources.EnterPassword}" FontSize="15" FontFamily="NunitoRegular"/>
+                    <coreLayout:SfTextInputLayout Hint="{x:Static res:AppResources.Password}"
+                                                  EnablePasswordVisibilityToggle = "True"
+                                                  HeightRequest="75"
+                                                  Margin="0, 5,0,0"
+                                                  LeadingViewPosition="Inside"
+                                                  ContainerBackground="{x:StaticResource ContainerBackgroundColor}">
+                        <Entry x:Name="PasswordEntry" Text="{Binding Password, Mode=TwoWay}"
+                               TextChanged="UpdateSignInLayout"/>
+                        <coreLayout:SfTextInputLayout.HintLabelStyle>
+                            <coreLayout:LabelStyle FontSize="16" FontFamily="NunitoRegular"/>
+                        </coreLayout:SfTextInputLayout.HintLabelStyle>
+                        <coreLayout:SfTextInputLayout.LeadingView>
+                            <Image Style="{StaticResource IconImageStyle}">
+                                <Image.Source>
+                                    <fontHelpers:FontAwesomeSolidIconSource Glyph="{x:Static fontHelpers:FontAwesomeIcons.Lock}"
+                                                                            Color="{x:StaticResource Primary}" />
+                                </Image.Source>
+                            </Image>
+                        </coreLayout:SfTextInputLayout.LeadingView>
+                    </coreLayout:SfTextInputLayout>
+                    
+                    <!-- Forgot Password -->
+                    <Label Text="{x:Static res:AppResources.ForgotPassword}" FontSize="15" FontFamily="NunitoBold" HorizontalOptions="End" TextColor="{x:StaticResource Primary}">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnForgotPasswordTapped"></TapGestureRecognizer>
+                        </Label.GestureRecognizers>
+                    </Label>
+
+                    <!-- Login button -->
+                    <buttons:SfButton x:Name="SignInButton"
+                                      Margin="0, 20, 0, 0"
+                                      IsEnabled="False"
+                                      Clicked="OnSignInClikced"
+                                      EnableRippleEffect="True"
+                                      Content="{StaticResource InitialTemplate}"
+                                      Background="{x:StaticResource Primary}"
+                                      HeightRequest="55"/>
+                    
+                    <!-- New user -->
+                    <Label Text="{x:Static res:AppResources.DoNotHaveAnAccount}" 
+                           FontSize="15" 
+                           FontFamily="NunitoBold" 
+                           Margin="0, 25, 0, 10" 
+                           HorizontalOptions="Center" 
+                           TextColor="{x:StaticResource Primary}">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnRegisterTapped"></TapGestureRecognizer>
+                        </Label.GestureRecognizers>
+                    </Label>
+                </StackLayout>
+            </Grid>    
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

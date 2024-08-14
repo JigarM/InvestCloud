@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:coreLayout="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+             xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+             xmlns:maskedInputs="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
+             xmlns:fontHelpers="clr-namespace:InvestCloud.Utils.FontHelpers"
+             xmlns:viewModel="clr-namespace:InvestCloud.ViewModels"
+             xmlns:res="clr-namespace:InvestCloud.Resources.Strings"
+             x:DataType="viewModel:SignUpViewModel"
+             Shell.NavBarIsVisible="False"
+             NavigationPage.HasNavigationBar="False"
+             HideSoftInputOnTapped="True"
+             x:Class="InvestCloud.Pages.SignUpPage">
+    
+    <!-- Resources -->
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Image" x:Key="IconImageStyle">
+                <Setter Property="HeightRequest" Value="18"/>
+                <Setter Property="Aspect" Value="AspectFit"/>
+                <Setter Property="VerticalOptions" Value="Center"/>
+                <Setter Property="HorizontalOptions" Value="Center"/>
+            </Style>
+            <Style TargetType="Image" x:Key="BackButtonStyle">
+                <Setter Property="HeightRequest" Value="35"/>
+                <Setter Property="Aspect" Value="AspectFit"/>
+                <Setter Property="VerticalOptions" Value="Center"/>
+                <Setter Property="HorizontalOptions" Value="Start"/>  
+            </Style>
+            <DataTemplate x:Key="LoadingTemplate">
+                <Grid VerticalOptions="Fill" HorizontalOptions="Fill">
+                    <coreLayout:SfBusyIndicator x:Name="busy" AnimationType="CircularMaterial" IsRunning="True" 
+                        WidthRequest="45" HeightRequest="45" IndicatorColor="White" 
+                        VerticalOptions="Center" HorizontalOptions="Center"/>
+                </Grid>
+            </DataTemplate>
+            <DataTemplate x:Key="InitialTemplate">
+                <Label x:Name="label" Text="{x:Static res:AppResources.SignUp}" FontSize="21" TextColor="White"
+                       FontFamily="NunitoBold" HorizontalOptions="Center" VerticalOptions="Center"/>
+            </DataTemplate>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
+    <!-- Content -->
+    <ContentPage.Content>
+        <ScrollView>
+            <Grid RowDefinitions="64, *" Margin="10,0">
+                <Image Margin="15, 0 ,0,0" 
+                    Style="{StaticResource BackButtonStyle}">
+                    <Image.Source>
+                        <fontHelpers:FontAwesomeSolidIconSource Glyph="{x:Static fontHelpers:FontAwesomeIcons.ArrowLeft}" Color="{x:StaticResource Primary}" />
+                    </Image.Source>
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnBackButtonTapped"></TapGestureRecognizer>
+                    </Image.GestureRecognizers>
+                </Image>
+                
+                <!-- Login Content -->
+                <StackLayout Grid.Row="1" Spacing="0" Margin="10, 10">
+                    
+                    <!-- Sign Up -->
+                    <Label FontSize="32" FontFamily="NunitoBold" Text="{x:Static res:AppResources.CreateAccount}"/>
+                    <Label Text="{x:Static res:AppResources.EnterPersonalInfo}" FontSize="12" FontFamily="NunitoRegular"/>
+                    
+                    <!-- First Name -->
+                    <coreLayout:SfTextInputLayout x:Name="FirstNameTextInputLayout" Hint="{x:Static res:AppResources.FirstName}"
+                                                  HeightRequest="75" Margin="0, 40,0,0" 
+                                                  ErrorText="{x:Static res:AppResources.FirstNameErrorText}"
+                                                  LeadingViewPosition="Inside" ContainerBackground="{x:StaticResource ContainerBackgroundColor}">
+                        <Entry x:Name="FirstNameEntry" Text="{Binding FirstName, Mode=TwoWay}" TextChanged="OnFirstNameChanged" />
+                        <coreLayout:SfTextInputLayout.HintLabelStyle>
+                            <coreLayout:LabelStyle FontSize="16" FontFamily="NunitoRegular"/>
+                        </coreLayout:SfTextInputLayout.HintLabelStyle>
+                        <coreLayout:SfTextInputLayout.LeadingView>
+                            <Image Style="{StaticResource IconImageStyle}">
+                                <Image.Source>
+                                    <fontHelpers:FontAwesomeSolidIconSource Glyph="{x:Static fontHelpers:FontAwesomeIcons.User}"
+                                                                            Color="{x:StaticResource Primary}" />
+                                </Image.Source>
+                            </Image>
+                        </coreLayout:SfTextInputLayout.LeadingView>
+                    </coreLayout:SfTextInputLayout>
+                    
+                    <!-- Last Name -->
+                    <coreLayout:SfTextInputLayout x:Name="LastNameTextInputLayout" Hint="{x:Static res:AppResources.LastName}" 
+                                                  Margin="0, 5,0,0" HeightRequest="75" ErrorText="{x:Static res:AppResources.LastNameErrorText}" 
+                                                  LeadingViewPosition="Inside" ContainerBackground="{x:StaticResource ContainerBackgroundColor}">
+                        <Entry x:Name="LastNameEntry" Text="{Binding LastName, Mode=TwoWay}" TextChanged="OnLastNameChanged" />
+                        <coreLayout:SfTextInputLayout.HintLabelStyle>
+                            <coreLayout:LabelStyle FontSize="16" FontFamily="NunitoRegular"/>
+                        </coreLayout:SfTextInputLayout.HintLabelStyle>
+                        <coreLayout:SfTextInputLayout.LeadingView>
+                            <Image Style="{StaticResource IconImageStyle}">
+                                <Image.Source>
+                                    <fontHelpers:FontAwesomeSolidIconSource Glyph="{x:Static fontHelpers:FontAwesomeIcons.User}"
+                                                                            Color="{x:StaticResource Primary}" />
+                                </Image.Source>
+                            </Image>
+                        </coreLayout:SfTextInputLayout.LeadingView>
+                    </coreLayout:SfTextInputLayout>
+                    
+                    <!-- Username -->
+                    <coreLayout:SfTextInputLayout Hint="{x:Static res:AppResources.Username}" HeightRequest="75" 
+                                                  Margin="0, 5,0,0" LeadingViewPosition="Inside"
+                                                  ContainerBackground="{x:StaticResource ContainerBackgroundColor}">
+                        <Entry x:Name="UsernameEntry" Text="{Binding Username, Mode=TwoWay}" TextChanged="UpdateSignUpLayout" />
+                        <coreLayout:SfTextInputLayout.HintLabelStyle>
+                            <coreLayout:LabelStyle FontSize="16" FontFamily="NunitoRegular"/>
+                        </coreLayout:SfTextInputLayout.HintLabelStyle>
+                        <coreLayout:SfTextInputLayout.LeadingView>
+                            <Image Style="{StaticResource IconImageStyle}">
+                                <Image.Source>
+                                    <fontHelpers:FontAwesomeSolidIconSource Glyph="{x:Static fontHelpers:FontAwesomeIcons.User}"
+                                                                            Color="{x:StaticResource Primary}" />
+                                </Image.Source>
+                            </Image>
+                        </coreLayout:SfTextInputLayout.LeadingView>
+                    </coreLayout:SfTextInputLayout>
+                    
+                    <!-- Password -->
+                    <coreLayout:SfTextInputLayout x:Name="PasswordTextInputLayout" Hint="{x:Static res:AppResources.Password}" 
+                                                  EnablePasswordVisibilityToggle = "True" Margin="0, 5,0,0" HeightRequest="75" LeadingViewPosition="Inside"
+                                                  ContainerBackground="{x:StaticResource ContainerBackgroundColor}">
+                        <Entry x:Name="PasswordEntry" Text="{Binding Password, Mode=TwoWay}" TextChanged="OnPasswordChanged" />
+                        <coreLayout:SfTextInputLayout.HintLabelStyle>
+                            <coreLayout:LabelStyle FontSize="16" FontFamily="NunitoRegular"/>
+                        </coreLayout:SfTextInputLayout.HintLabelStyle>
+                        <coreLayout:SfTextInputLayout.LeadingView>
+                            <Image Style="{StaticResource IconImageStyle}">
+                                <Image.Source>
+                                    <fontHelpers:FontAwesomeSolidIconSource Glyph="{x:Static fontHelpers:FontAwesomeIcons.Lock}"
+                                                                            Color="{x:StaticResource Primary}" />
+                                </Image.Source>
+                            </Image>
+                        </coreLayout:SfTextInputLayout.LeadingView>
+                    </coreLayout:SfTextInputLayout>
+                    
+                    <!-- Phone Number -->
+                    <coreLayout:SfTextInputLayout x:Name="PhoneNumberTextInputLayout" Hint="{x:Static res:AppResources.PhoneNumber}" HeightRequest="75" 
+                                                  LeadingViewPosition="Inside" Margin="0, 5,0,0"
+                                                  ContainerBackground="{x:StaticResource ContainerBackgroundColor}">
+                        <maskedInputs:SfMaskedEntry x:Name="PhoneNumberEntry" Text="{Binding PhoneNumber, Mode=TwoWay}" 
+                                                    MaskType="Simple" Mask="(000)-000-0000" HidePromptOnLeave="True"
+                                                    Keyboard="Numeric"
+                                                    ValidationMode = "KeyPress" ValueChanged="OnPhoneNumberValueChanged"/>
+                        <coreLayout:SfTextInputLayout.HintLabelStyle>
+                            <coreLayout:LabelStyle FontSize="16" FontFamily="NunitoRegular"/>
+                        </coreLayout:SfTextInputLayout.HintLabelStyle>
+                        <coreLayout:SfTextInputLayout.LeadingView>
+                            <Image Style="{StaticResource IconImageStyle}">
+                                <Image.Source>
+                                    <fontHelpers:FontAwesomeSolidIconSource Glyph="{x:Static fontHelpers:FontAwesomeIcons.Phone}"
+                                                                            Color="{x:StaticResource Primary}" />
+                                </Image.Source>
+                            </Image>
+                        </coreLayout:SfTextInputLayout.LeadingView>
+                    </coreLayout:SfTextInputLayout>
+                    
+                    <!-- Service Start Date -->
+                    <coreLayout:SfTextInputLayout x:Name="ServiceStartDateTextInputLayout" Hint="{x:Static res:AppResources.ServiceStartDate}" HeightRequest="75" 
+                                                  LeadingViewPosition="Inside" Margin="0, 5,0,0"
+                                                  ErrorText="{x:Static res:AppResources.ServiceStartDateErrorText}"
+                                                  ContainerBackground="{x:StaticResource ContainerBackgroundColor}">
+                        <DatePicker x:Name="ServiceStartDatePicker" MinimumDate="{Binding MinimumDate, Mode=TwoWay}"
+                                    Date="{Binding ServiceStartDate, Mode=TwoWay}"
+                                    DateSelected="OnServiceStartDateSelected"/>
+                        <coreLayout:SfTextInputLayout.HintLabelStyle>
+                            <coreLayout:LabelStyle FontSize="16" FontFamily="NunitoRegular"/>
+                        </coreLayout:SfTextInputLayout.HintLabelStyle>
+                        <coreLayout:SfTextInputLayout.LeadingView>
+                            <Image Style="{StaticResource IconImageStyle}">
+                                <Image.Source>
+                                    <fontHelpers:FontAwesomeSolidIconSource Glyph="{x:Static fontHelpers:FontAwesomeIcons.Calendar}"
+                                                                            Color="{x:StaticResource Primary}" />
+                                </Image.Source>
+                            </Image>
+                        </coreLayout:SfTextInputLayout.LeadingView>
+                    </coreLayout:SfTextInputLayout>
+                    
+                    <!-- Sign up button -->
+                    <buttons:SfButton x:Name="SignUpButton"
+                                      Margin="0, 20, 0, 0"
+                                      IsEnabled="False"
+                                      Clicked="OnSignUpClikced"
+                                      EnableRippleEffect="True"
+                                      Content="{StaticResource InitialTemplate}"
+                                      Background="{x:StaticResource Primary}"
+                                      HeightRequest="55"/>
+                    
+                </StackLayout>
+            </Grid>    
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>
